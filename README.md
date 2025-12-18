@@ -1,16 +1,51 @@
-# React + Vite
+# Сайт психолога - Full-Stack проект
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Полнофункциональный веб-сайт для психолога с современным стеком технологий.
 
-Currently, two official plugins are available:
+## Технологии
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Frontend
+- **React 18** - UI библиотека
+- **Vite** - Сборщик и dev сервер
+- **Bootstrap 5** + **React Bootstrap** - Стилизация
+- **SCSS** - Препроцессор CSS
+- **Axios** - HTTP клиент
+- **AOS** - Анимации при скролле
 
-## React Compiler
+### Backend
+- **Laravel 10** - PHP фреймворк
+- **MySQL 8** - База данных
+- **Nginx** - Веб-сервер
+- **Docker** + **Docker Compose** - Контейнеризация
+- **PHP 8.2** - Язык программирования
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Быстрый старт
 
-## Expanding the ESLint configuration
+### Требования
+- Windows 10/11 с WSL 2
+- Docker Desktop
+- Node.js 18+ (опционально для разработки)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Автоматический запуск (рекомендуется)
+
+1. **Скачайте** все файлы проекта в одну папку
+2. **Запустите** `start-project.bat` двойным кликом
+3. **Ждите** завершения автоматической настройки (5-10 минут)
+4. **Сайт** откроется автоматически: http://localhost:8000
+
+### Ручной запуск
+
+```bash
+# 1. Запуск контейнеров
+docker-compose up -d
+
+# 2. Инициализация Laravel
+docker exec psychologist_php composer install
+docker exec psychologist_php php artisan key:generate
+
+# 3. Установка зависимостей React
+cd frontend
+npm install
+npm run dev
+
+# 4. Откройте http://localhost:8000
