@@ -23,7 +23,7 @@ const Footer = () => {
           <Col md={3}>
             <h6 className="mb-3">Контакты</h6>
             <ul className="list-unstyled">
-              <li>Email: hello@example.com</li>
+              <li>Email: anna@example.com</li>
               <li>Телефон: +7 (999) 123-45-67</li>
               <li className="social-links mt-2">
                 <a href="#" aria-label="Instagram"><i className="bi bi-instagram"></i></a>
@@ -36,7 +36,7 @@ const Footer = () => {
         <hr className="my-4" />
         <Row>
           <Col md={6}>
-            <p>&copy; 2024 Психолог Анна. Все права защищены.</p>
+            <p>&copy; 2025 Психолог Анна. Все права защищены.</p>
           </Col>
           <Col md={6} className="text-md-end">
             <Link to="/privacy">Политика конфиденциальности</Link>

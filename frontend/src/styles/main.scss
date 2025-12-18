@@ -1,59 +1,5 @@
-$primary-color: #f8f0e5;
-$secondary-color: #eadbc8;
-$accent-color: #dac0a3;
-$text-color: #5a4d41;
-$light-text: #8a7b6d;
-$white: #ffffff;
-$soft-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-$main-font: 'Arial', sans-serif;
-$heading-font: 'Georgia', serif;
-$section-padding: 80px 0;
-$container-padding: 0 20px;
-$transition: all 0.3s ease;
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-.fade-in-up {
-  animation: fadeInUp 0.8s ease-out;
-}
-
-.fade-in {
-  animation: fadeIn 1s ease-out;
-}
-
-.pulse {
-  animation: pulse 2s infinite;
-}
+@import 'variables';
+@import 'animations';
 
 @import 'bootstrap/scss/bootstrap';
 
@@ -63,10 +9,6 @@ body {
   line-height: 1.6;
   background-color: $primary-color;
   overflow-x: hidden;
-}
-
-* {
-  transition: $transition;
 }
 
 h1, h2, h3, h4, h5, h6 {

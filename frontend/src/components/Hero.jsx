@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import terapevtImg from '../image/terapevt.jpg';
 
 const Hero = () => {
   useEffect(() => {
@@ -47,7 +48,14 @@ const Hero = () => {
                 }}
               >
                 <span style={{ color: '#5a4d41', fontSize: '1.2rem' }}>
-                  Изображение психолога
+                  <img src={terapevtImg} alt="Терапевт"
+                    style={{
+                      width: '400px',
+                      height: 'auto',
+                      maxWidth: '100%',
+                      borderRadius: '8px',
+                      boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+                    }}/>
                 </span>
               </div>
             </div>

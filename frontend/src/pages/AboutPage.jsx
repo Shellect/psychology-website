@@ -1,6 +1,7 @@
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { useEffect } from 'react';
 import AOS from 'aos';
+import terapevtImg from '../image/terapevt_me.jpg';
 
 const AboutPage = () => {
   useEffect(() => {
@@ -27,10 +28,19 @@ const AboutPage = () => {
                     background: 'linear-gradient(135deg, #eadbc8 0%, #dac0a3 100%)',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    overflow: 'hidden'
                   }}
                 >
-                  <span style={{ color: '#5a4d41' }}>Фото психолога</span>
+                  <span style={{ color: '#5a4d41' }}><img src={terapevtImg} alt='Терапевт2' 
+                      style={{
+                        width: '250px',
+                        height: 'auto',
+                        maxWidth: '100%',
+                        borderRadius: '8px',
+                        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+                        marginTop: '30px'
+                      }} /></span>
                 </div>
               </Col>
               <Col md={8}>
@@ -39,7 +49,7 @@ const AboutPage = () => {
                   Сертифицированный гештальт-терапевт с более чем 5-летним опытом работы
                 </p>
                 <p>
-                  Моя профессиональная journey началась с получения высшего психологического 
+                  Моя профессиональная карьера началась с получения высшего психологического 
                   образования в Московском государственном университете, после чего я прошла 
                   специализацию по гештальт-терапии в Московском институте гештальта и психодрамы.
                 </p>
@@ -96,8 +106,7 @@ const AboutPage = () => {
                       <Card.Title>Сертификация</Card.Title>
                       <Card.Text>
                         Европейская ассоциация гештальт-терапии (EAGT)<br/>
-                        Действительный член<br/>
-                        2021-настоящее время
+                        Действительный член, c 2021 года
                       </Card.Text>
                     </Card.Body>
                   </Card>
@@ -117,7 +126,7 @@ const AboutPage = () => {
                 Я создаю безопасное, принимающее пространство, где вы сможете исследовать 
                 свои чувства, мысли и поведенческие паттерны. Вместе мы будем работать над 
                 тем, чтобы вы смогли лучше понимать себя, свои потребности и находить 
-                ресурсы для решения жизненных challenges.
+                ресурсы для решения жизненных вызовов.
               </p>
             </div>
           </div>

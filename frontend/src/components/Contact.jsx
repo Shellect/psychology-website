@@ -136,7 +136,7 @@ const Contact = () => {
                           name="phone"
                           value={formData.phone}
                           onChange={handleChange}
-                          placeholder="+7 (999) 123-45-67"
+                          placeholder="+7 (999) 999-99-99"
                           disabled={loading}
                         />
                       </Form.Group>
