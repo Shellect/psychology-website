@@ -19,11 +19,14 @@ class Appointment extends Model
         'service_type',
         'ip_address',
         'user_agent',
+        'cookie_consent',
         'status'
     ];
 
     protected $casts = [
         'preferred_date' => 'date',
         'cookie_consent' => 'boolean',
+        'created_at' => 'datetime',
+        'update_at' => 'datetime'
     ];
 }

@@ -1,51 +1,57 @@
-# Сайт психолога - Full-Stack проект
+# Персональный сайт психолога
 
-Полнофункциональный веб-сайт для психолога с современным стеком технологий.
+Полнофункциональный веб-сайт для психолога с системой онлайн-записи на консультации
+и управление клиентской базой
 
-## Технологии
+Цель проекта: Создание современного инструмента для психологов, позволяющего автоматизировать процесс записи клиентов, ведения клиентской базы и управления консультациями
 
-### Frontend
-- **React 18** - UI библиотека
-- **Vite** - Сборщик и dev сервер
-- **Bootstrap 5** + **React Bootstrap** - Стилизация
-- **SCSS** - Препроцессор CSS
-- **Axios** - HTTP клиент
-- **AOS** - Анимации при скролле
+### Для развертывания выполните:
 
-### Backend
-- **Laravel 10** - PHP фреймворк
-- **MySQL 8** - База данных
-- **Nginx** - Веб-сервер
-- **Docker** + **Docker Compose** - Контейнеризация
-- **PHP 8.2** - Язык программирования
-
-## Быстрый старт
-
-### Требования
-- Windows 10/11 с WSL 2
-- Docker Desktop
-- Node.js 18+ (опционально для разработки)
-
-### Автоматический запуск (рекомендуется)
-
-1. **Скачайте** все файлы проекта в одну папку
-2. **Запустите** `start-project.bat` двойным кликом
-3. **Ждите** завершения автоматической настройки (5-10 минут)
-4. **Сайт** откроется автоматически: http://localhost:8000
-
-### Ручной запуск
-
+1. Клонируйте репозиторий:\
 ```bash
-# 1. Запуск контейнеров
-docker-compose up -d
+git clone https://github.com/Tanya-ProCoder/psychology-website
+cd psychology-website
+```
 
-# 2. Инициализация Laravel
-docker exec psychologist_php composer install
-docker exec psychologist_php php artisan key:generate
+2. Настройте переменные окружения:\
+```bash
+cd .env.example .env
+```
 
-# 3. Установка зависимостей React
-cd frontend
-npm install
-npm run dev
+3. Соберите статику:\
 
-# 4. Откройте http://localhost:8000
+- для Linux/macOS:
+```bash
+make build-static
+```
+
+- для Windows:
+```cmd
+.\scripts\build-static.bat
+```
+
+4. Примените миграции:\
+
+- для Linux/macOS:
+```bash
+source ./scripts/migrate.sh
+```
+
+- для Windows:
+```cmd
+.\scripts\migrate.bat
+```
+
+5. Поднимите контейнеры:\
+
+- для Linux/macOS:
+```bash
+make serve
+```
+
+- для Windows:
+```cmd
+docker compose up -d
+```
+
+6. Откройте http://localhost:8000

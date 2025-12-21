@@ -1,15 +1,16 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
-    'Accept': 'application/json'
+    'Accept': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest'
   },
   timeout: 10000,
-  withCredentials: true
+  withCredentials: false,
 });
 
 api.interceptors.request.use(
@@ -20,7 +21,7 @@ api.interceptors.request.use(
     }
 
     const csrfToken = getCookie('XSRF-TOKEN');
-    if (csrfToken) {
+    if (csrfToken && ['post', 'put', 'patch', 'delete'].includes(config.method)) {
       config.headers['X-XSRF-TOKEN'] = csrfToken;
     }
     
@@ -43,8 +44,16 @@ api.interceptors.response.use(
       url: error.config?.url,
       method: error.config?.method,
       status: error.response?.status,
-      message: error.message
+      message: error.message,
+      fullError: error
     });
+    
+    if (error.code === 'ERR_NETWORK') {
+      console.error('Network error - проверьте:');
+      console.error('1. Запущен ли Laravel сервер?');
+      console.error('2. Правильный ли порт? (должен быть 8000)');
+      console.error('3. URL запроса:', error.config?.baseURL + error.config?.url);
+    }
     
     if (error.response?.status === 401) {
       localStorage.removeItem('auth_token');
@@ -58,6 +67,10 @@ api.interceptors.response.use(
       });
     }
     
+    if (error.response?.status === 500) {
+      console.error('Server 500 error details:', error.response.data);
+    }
+    
     return Promise.reject(error);
   }
 );
@@ -66,6 +79,7 @@ function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(';').shift();
+  return null;
 }
 
 export const appointmentAPI = {
