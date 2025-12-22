@@ -5,24 +5,24 @@ services:
       - "8000:80"
     volumes:
       - ./frontend/dist:/var/www/html/frontend/dist
-      - ./backend:/var/www/html/backend
+      - ./backend-psy:/var/www/html/backend
       - ./.develop/nginx.conf:/etc/nginx/conf.d/default.conf
     networks: 
       - psychology-network
+    depends_on:
+      - php-fpm
   
   php-fpm:
     build: .
     container_name: laravel
-    image: php:8.2.12-fpm
-    working_dir: /var/www/html
     env_file:
       - ./.env
     volumes:
-      - ./backend:/var/www/html
+      - ./backend-psy:/app
     networks: 
       - psychology-network
-    # ports:
-    #   - 9000:9000
+    depends_on:
+      - db
 
   db:
     image: mysql:9.5.0-oraclelinux9

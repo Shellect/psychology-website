@@ -12,10 +12,7 @@ Route::get('/health', function () {
     ]);
 });
 
-Route::prefix('v1')->group(function () {
-    Route::post('/appointments', [AppointmentController::class, 'store']);
-    
-    Route::get('/appointments', function() {
-        return response()->json(['message' => 'Список заявок (требует авторизации)']);
-    })->middleware('auth:sanctum');
-});
+Route::post('/appointments', [AppointmentController::class, 'store']);
+Route::get('/appointments', function() {
+    return response()->json(['message' => 'Список заявок (требует авторизации)']);
+})->middleware('auth:sanctum');
