@@ -9,7 +9,8 @@ services:
     networks: 
       - psychology-network
     depends_on:
-      - php-fpm
+      php-fpm:
+        condition: service_healthy
   
   php-fpm:
     build: .
@@ -21,7 +22,14 @@ services:
     networks: 
       - psychology-network
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "SCRIPT_NAME=/ping SCRIPT_FILENAME=/ping REQUEST_METHOD=GET cgi-fcgi -bind -connect 127.0.0.1:9000 | grep -q pong"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
 
   db:
     image: mysql:9.5.0-oraclelinux9
@@ -35,6 +43,12 @@ services:
       - ./.develop/mysql_init:/docker-entrypoint-initdb.d
     networks:
       - psychology-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
     
   adminer:
     image: adminer:4.8.1
