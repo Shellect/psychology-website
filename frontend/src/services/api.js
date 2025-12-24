@@ -10,19 +10,15 @@ const api = axios.create({
     'X-Requested-With': 'XMLHttpRequest'
   },
   timeout: 10000,
-  withCredentials: false,
+  withCredentials: true, // Important for session cookies
 });
 
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('auth_token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-
+    // Get CSRF token from cookie for state-changing requests
     const csrfToken = getCookie('XSRF-TOKEN');
     if (csrfToken && ['post', 'put', 'patch', 'delete'].includes(config.method)) {
-      config.headers['X-XSRF-TOKEN'] = csrfToken;
+      config.headers['X-XSRF-TOKEN'] = decodeURIComponent(csrfToken);
     }
     
     console.log(`Making ${config.method.toUpperCase()} request to ${config.url}`);
@@ -45,7 +41,6 @@ api.interceptors.response.use(
       method: error.config?.method,
       status: error.response?.status,
       message: error.message,
-      fullError: error
     });
     
     if (error.code === 'ERR_NETWORK') {
@@ -56,8 +51,11 @@ api.interceptors.response.use(
     }
     
     if (error.response?.status === 401) {
-      localStorage.removeItem('auth_token');
-      window.location.href = '/';
+      // Don't redirect on login/register pages
+      if (!window.location.pathname.includes('/login') && 
+          !window.location.pathname.includes('/register')) {
+        window.location.href = '/login';
+      }
     }
     
     if (error.response?.status === 422) {
@@ -82,12 +80,55 @@ function getCookie(name) {
   return null;
 }
 
+/**
+ * Get CSRF cookie before making auth requests
+ */
+const getCsrfCookie = async () => {
+  await axios.get(
+    (import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/sanctum/csrf-cookie',
+    { withCredentials: true }
+  );
+};
+
+// Auth API
+export const authAPI = {
+  register: async (data) => {
+    await getCsrfCookie();
+    return api.post('/v1/auth/register', data);
+  },
+  login: async (data) => {
+    await getCsrfCookie();
+    return api.post('/v1/auth/login', data);
+  },
+  logout: () => api.post('/v1/auth/logout'),
+  me: () => api.get('/v1/auth/me'),
+  updateProfile: (data) => api.put('/v1/auth/profile', data),
+};
+
+// Appointments API
 export const appointmentAPI = {
   create: (appointmentData) => api.post('/v1/appointments', appointmentData),
   getAll: () => api.get('/v1/appointments'),
   getStats: () => api.get('/v1/appointments/stats'),
   getById: (id) => api.get(`/v1/appointments/${id}`),
   updateStatus: (id, status) => api.put(`/v1/appointments/${id}/status`, { status })
+};
+
+// Dashboard API (for clients)
+export const dashboardAPI = {
+  getMyAppointments: () => api.get('/v1/dashboard/my-appointments'),
+  getMyStats: () => api.get('/v1/dashboard/my-stats'),
+  getAppointment: (id) => api.get(`/v1/dashboard/appointments/${id}`),
+  processPayment: (id, paymentMethod) => api.post(`/v1/dashboard/appointments/${id}/pay`, { payment_method: paymentMethod }),
+};
+
+// Admin API
+export const adminAPI = {
+  getStats: () => api.get('/v1/admin/stats'),
+  getAppointments: (params = {}) => api.get('/v1/admin/appointments', { params }),
+  updateAppointmentStatus: (id, status) => api.put(`/v1/admin/appointments/${id}/status`, { status }),
+  markPaymentComplete: (id) => api.post(`/v1/admin/appointments/${id}/mark-paid`),
+  getClients: (params = {}) => api.get('/v1/admin/clients', { params }),
 };
 
 export const healthAPI = {
