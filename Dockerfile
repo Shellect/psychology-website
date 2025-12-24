@@ -1,8 +1,8 @@
 FROM php:8.2.12-fpm
 
 RUN apt-get update \
-    && apt-get install -y libfcgi-bin \
-    && docker-php-ext-install pdo_mysql \
+    && apt-get install -y libfcgi-bin libzip-dev unzip\
+    && docker-php-ext-install pdo_mysql zip \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 

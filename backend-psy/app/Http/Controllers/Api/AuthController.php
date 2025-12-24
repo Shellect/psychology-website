@@ -159,10 +159,10 @@ class AuthController extends Controller
                 'errors' => $e->errors()
             ], 422);
         } catch (\Exception $e) {
-            Log::error('❌ Ошибка входа:', ['message' => $e->getMessage()]);
+            Log::error('Ошибка входа:', ['message' => $e->getMessage()]);
             return response()->json([
                 'success' => false,
-                'message' => 'Ошибка входа. Попробуйте позже.'
+                'message' => $e->getMessage()
             ], 500);
         }
     }

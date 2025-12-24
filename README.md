@@ -15,43 +15,18 @@ cd psychology-website
 
 2. Настройте переменные окружения:\
 ```bash
-cd .env.example .env
+cp backend-psy/.env.example backend-psy/.env
 ```
 
-3. Соберите статику:\
+3. Соберите статику:
 
-- для Linux/macOS:
 ```bash
-make build-static
+cd frontend 
+npm run build
 ```
 
-- для Windows:
-```cmd
-.\scripts\build-static.bat
-```
-
-4. Примените миграции:\
-
-- для Linux/macOS:
+4. Поднимите контейнеры
 ```bash
-source ./scripts/migrate.sh
+    docker compose up
 ```
-
-- для Windows:
-```cmd
-.\scripts\migrate.bat
-```
-
-5. Поднимите контейнеры:\
-
-- для Linux/macOS:
-```bash
-make serve
-```
-
-- для Windows:
-```cmd
-docker compose up -d
-```
-
-6. Откройте http://localhost:8000
+5. Откройте [http://localhost:8000](http://localhost:8000)

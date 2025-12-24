@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+# Ensure storage directories exist
+mkdir -p storage/framework/cache/data storage/framework/views storage/framework/sessions storage/logs
+chmod -R 775 storage bootstrap/cache
+
 composer install --no-interaction --optimize-autoloader
 
 if [ -z "$APP_KEY" ] || [ "$APP_KEY" = "" ]; then
